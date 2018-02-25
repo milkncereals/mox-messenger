@@ -1,0 +1,6 @@
+framework module Pods_Mox {
+  umbrella header "Pods-Mox-umbrella.h"
+
+  export *
+  module * { export * }
+}
