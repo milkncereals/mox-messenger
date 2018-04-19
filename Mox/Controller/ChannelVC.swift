@@ -10,6 +10,10 @@ import UIKit
 
 class ChannelVC: UIViewController {
 
+    // Outlets
+    @IBOutlet weak var loginButton: UIButton! // Need to change the title of the login button, we will display the user's name instead.
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,5 +23,9 @@ class ChannelVC: UIViewController {
         // The rearview should take up this much space <view,frame,size,width> except 60 points. */
     }
 
-
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: TO_LOGIN, sender: nil)
+        
+    }
+    
 }
