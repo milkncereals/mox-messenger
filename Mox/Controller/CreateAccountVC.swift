@@ -34,7 +34,7 @@ class CreateAccountVC: UIViewController {
         guard let pass = passTxt.text , passTxt.text != "" else { return //code read: pass text  where the passTxt.text does not equal an empty string, else we will return.
         }
         
-        AuthService.instance.registerUser(email: email, password: pass) { (success) in
+        AuthService.instance.registerUser(email: email, password: pass) { (success) in //CMD+ click ".registerUser" to check the path definition."
             if success {
                 print("registered user!")
             } //Once we have have our email/pass we will call our register function inside the auth service. Server can sleep, so check out Hobby if you want a server that's always awake and responsive to any calls.
