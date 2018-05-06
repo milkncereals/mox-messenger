@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire // Register user function, create web request specifiy headers/body and see the response come back. Alamofire is a library built ontop of apple's url session framework which makes web request easier.
+import SwiftyJSON
 
 /*  https://github.com/Alamofire/Alamofire */
 
@@ -50,16 +51,12 @@ class AuthService {
         
         let lowerCaseEmail = email.lowercased()
         
-        let header = [
-            "Content-Type": "application/json; charset=utf-8"
-        ]
-        
         let body: [String: Any] = [
             "email": lowerCaseEmail,
             "password": password
         ]
         
-        Alamofire.request(URL_REGISTER, method: .post, parameters: body, encoding: JSONEncoding.default, headers: header).responseString { (response) in
+        Alamofire.request(URL_REGISTER, method: .post, parameters: body, encoding: JSONEncoding.default, headers: HEADER).responseString { (response) in
             
             if response.result.error == nil {
                 completion(true) //if everything goes fine, then it's true
@@ -70,4 +67,51 @@ class AuthService {
         }
         //.responseString is used but you may exchange this to .responseJSON (because this would be used majority of the time).
     }    
+    
+    func loginUser(email: String, password: String, completion: @escaping CompletionHandler) {
+        
+        let lowerCaseEmail = email.lowercased()
+        
+        let body: [String: Any] = [
+            "email": lowerCaseEmail,
+            "password": password
+        ]
+        
+        Alamofire.request(URL_LOGIN, method: .post, parameters: body, encoding: JSONEncoding.default, headers: HEADER).responseJSON { (response) in
+            if response.result.error == nil {
+                if let json = response.result.value as?
+                    Dictionary<String, Any> { //cast result.value as dictionary (type string), the key is always a string, but the value could be anything, bool, string , int etc... (therefore we choose anyh)
+                    // The syntax for working with JSON dictionary, all we've to do is...
+                    if let email = json["user"] as? String { // if we find the email we will cast it as a string, if successful then we'll self.userEmail = token.
+                        self.userEmail = email
+                    }
+                    if let token = json["token"] as? String { // if we find the token key we will cast it as a string, if successful then we'll self.authToken = token.
+                        self.authToken = token
+                    }
+                } // this casting is not good practice for handling JSON, hence why SWIFTYJSON is good to use.
+                
+//                //Using SwiftyJSON
+//                guard let data = response.data else { return } // It creates a JSON object out of the ub resposne.data, so we need a data
+//                let json = JSON(data: data)
+//                self.userEmail = json["user"].stringValue //This automatically/safety unwraps the value for you, or it will set it into an empty string.
+//                self.authToken = json["token"].stringValue //++ reasons why SwiftyJSON is a better. 4 lines vs 8 lines of code (compared above) no need to cast Dictionaries, no need for if/lets, no need to cast as Strings etc...
+//
+                
+                self.isLoggedIn = true // If everything went fine, then thats it. Now we've successfully logged in a user.
+                completion(true) //we need to know how to receive JSON from API "JSON Parsing"
+                
+            } else {
+                completion(false)
+                debugPrint(response.result.error as Any)
+            }
+        }
+        //responseJSON is used now, because the response is specified in the API as JSON.
+    }
+
+
+
 }
+
+
+
+

@@ -15,6 +15,7 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 // URL Constants
 let BASE_URL = "https://moxchat.herokuapp.com/v1/"
 let URL_REGISTER = "\(BASE_URL)account/register" //\(base_url): This is string extrapolation
+let URL_LOGIN = "\(BASE_URL)account/login" // these URLs are going to a specific location in the API, so that the API knows what to do with thhe information/request that it's receiving.
 
 // Segues
 let TO_LOGIN = "toLogin"
@@ -27,3 +28,8 @@ let TOKEN_KEY = "token"
 let LOGGED_IN_KEY = "loggedIn"
 let USER_EMAIL = "userEmail"
 
+// Headers
+
+let HEADER = [
+    "Content-Type": "application/json; charset=utf-8"
+]
