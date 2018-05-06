@@ -16,7 +16,7 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 let BASE_URL = "https://moxchat.herokuapp.com/v1/"
 let URL_REGISTER = "\(BASE_URL)account/register" //\(base_url): This is string extrapolation
 let URL_LOGIN = "\(BASE_URL)account/login" // these URLs are going to a specific location in the API, so that the API knows what to do with thhe information/request that it's receiving.
-
+let URL_USER_ADD = "\(BASE_URL)user/add"
 // Segues
 let TO_LOGIN = "toLogin"
 let TO_CREATE_ACCOUNT = "toCreateAccount"
@@ -27,6 +27,11 @@ let UNWIND = "unwindToChannel"
 let TOKEN_KEY = "token"
 let LOGGED_IN_KEY = "loggedIn"
 let USER_EMAIL = "userEmail"
+let ADD_ID = "addId"
+let ADD_COLOR = "addColor"
+let ADD_AVATAR_NAME = "addAvatarName"
+let ADD_EMAIL = "addEmail"
+let ADD_NAME = "addName"
 
 // Headers
 

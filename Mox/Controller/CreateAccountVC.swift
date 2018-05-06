@@ -17,6 +17,11 @@ class CreateAccountVC: UIViewController {
     @IBOutlet weak var passTxt: UITextField!
     @IBOutlet weak var userImg: UIImageView!
     
+    // Variables (Default)
+    
+    var avatarName = "profileDefault"
+    var avatarColor = "[0.5, 0.5, 0.5, 1]" // Default light grey color RGB Alpha properties of a color (array)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,18 +34,26 @@ class CreateAccountVC: UIViewController {
     }
     
     @IBAction func createAccntPressed(_ sender: Any) {
+        guard let name = usernameTxt.text , usernameTxt.text != "" else { return // guard statements : unwrapping optional values, the values of the uI text field (optional string) therefore we need to unwrap them.
+        }
         guard let email = emailTxt.text , emailTxt.text != "" else { return // guard statements : unwrapping optional values, the values of the uI text field (optional string) therefore we need to unwrap them.
         }
         guard let pass = passTxt.text , passTxt.text != "" else { return //code read: pass text  where the passTxt.text does not equal an empty string, else we will return.
         }
         
-        AuthService.instance.registerUser(email: email, password: pass) { (success) in //CMD+ click ".registerUser" to check the path definition."
+        AuthService.instance.registerUser(email: email, password: pass) { (success) in //CMD+ click ".registerUser" to check the path definition." //AFTER I CLICK THE Create Account Button...WE REGISTER THE USER {1}
             if success {
-                AuthService.instance.loginUser(email: email, password: pass, completion: { (success) in
+                AuthService.instance.loginUser(email: email, password: pass, completion: { (success) in //AFTER I CLICK THE Create Account Button...WE REGISTER THE USER THEN WE LOGIN THE USER... {2}
                     if success {
-                        print("logged in user", AuthService.instance.authToken)
-                        //Once we have have our email/pass we will call our register function inside the auth service. Server can sleep, so check out Hobby if you want a server that's always awake and responsive to any calls.
-                        //print("registered user!") <-- this would be used instead of AuthService.instance.loginUser....
+                        AuthService.instance.createUser(name: name, email: email, avatarName: self.avatarName, avatarColor: self.avatarColor, completion: { (success) in //AFTER I CLICK THE Create Account Button...WE REGISTER THE USER, LOGIN THE USER THEN WE CREATE THE USER... {3}
+                            if success {
+                                self.performSegue(withIdentifier: UNWIND, sender: nil)
+                                    print(UserDataService.instance.name, UserDataService.instance.avatarName)
+                            }
+                        })
+//                        print("logged in user", AuthService.instance.authToken)
+//                        //Once we have have our email/pass we will call our register function inside the auth service. Server can sleep, so check out Hobby if you want a server that's always awake and responsive to any calls.
+//                        //print("registered user!") <-- this would be used instead of AuthService.instance.loginUser....
                     }
                 })
             }

@@ -44,7 +44,54 @@ class AuthService {
             defaults.set(newValue, forKey: USER_EMAIL) //These variables wil be persisted as the app launches
         }
     }
-
+    
+    var addId: String {
+        get {
+            return defaults.value(forKey: ADD_ID) as! String
+        }
+        set {
+            defaults.set(newValue, forKey: ADD_ID) //These variables wil be persisted as the app launches
+        }
+    }
+    
+    var addColor: String {
+        get {
+            return defaults.value(forKey: ADD_COLOR) as! String
+        }
+        set {
+            defaults.set(newValue, forKey: ADD_COLOR) //These variables wil be persisted as the app launches
+        }
+    }
+    
+    var addAvatarName: String {
+        get {
+            return defaults.value(forKey: ADD_AVATAR_NAME) as! String
+        }
+        set {
+            defaults.set(newValue, forKey: ADD_AVATAR_NAME) //These variables wil be persisted as the app launches
+        }
+    }
+    
+    var addEmail: String {
+        get {
+            return defaults.value(forKey: ADD_EMAIL) as! String
+        }
+        set {
+            defaults.set(newValue, forKey: ADD_EMAIL) //These variables wil be persisted as the app launches
+        }
+    }
+    
+    var addName: String {
+        get {
+            return defaults.value(forKey: ADD_NAME) as! String
+        }
+        set {
+            defaults.set(newValue, forKey: ADD_NAME) //These variables wil be persisted as the app launches
+        }
+    }
+    
+// cut here
+    
     func registerUser(email: String, password: String, completion: @escaping CompletionHandler) {
         //because web requests are asynchronous (we don't know when response go back), we need a way of knowing when it's finished. We do this via "completion handler"
         //Check Constants.swift for the completionhandler.
@@ -108,10 +155,71 @@ class AuthService {
         //responseJSON is used now, because the response is specified in the API as JSON.
     }
 
-
+    func createUser(name: String, email: String, avatarName: String, avatarColor: String, completion: @escaping CompletionHandler) {
+        
+        let lowerCaseEmail = email.lowercased()
+        
+        let body: [String: Any] = [
+            "name": name,
+            "email": lowerCaseEmail,
+            "avatarName": avatarName,
+            "avatarColor": avatarColor
+        ]
+        
+        let header = [
+            "Authorization":"Bearer \(AuthService.instance.authToken)",
+            "Content-Type": "application/json; charset=utf-8"
+        ]
+        
+        Alamofire.request(URL_USER_ADD, method: .post, parameters: body, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            
+            if response.result.error == nil {
+                if let json = response.result.value as?
+                    Dictionary<String, Any> { //cast result.value as dictionary (type string), the key is always a string, but the value could be anything, bool, string , int etc... (therefore we choose anyh)
+                    // The syntax for working with JSON dictionary, all we've to do is...
+                    if let id = json["_id"] as? String {
+                        self.addId = id
+                    }
+                    if let color = json["avatarColor"] as? String {
+                        self.addColor = color
+                    }
+                    if let avatarName = json["avatarName"] as? String {
+                        self.addAvatarName = avatarName
+                    }
+                    if let email = json["email"] as? String {
+                        self.addEmail = email
+                    }
+                    if let name = json["name"] as? String {
+                        self.addName = name
+                        
+                    }
+                
+//                //Using SwiftyJSON
+//                guard let data = response.data else { return }
+//                let json = JSON(data: data)
+//                let id = json["_id"].stringValue
+//                let color = json["avatarColor"].stringValue
+//                let avatarName = json["avatarName"].stringValue
+//                let email = json["email"].stringValue
+//                let name = json["name"].stringValue
+                    
+                    UserDataService.instance
+                    .setUserData(id: self.addId, color: self.addColor, avatarName: self.addAvatarName, email: self.addEmail, name: self.addName)
+                    completion(true)
+                    
+                    
+                    
+            } else {
+                completion(false)
+                debugPrint(response.result.error as Any)
+                
+                
+            }
+        }
+    }
 
 }
 
 
 
-
+}
