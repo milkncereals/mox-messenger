@@ -12,6 +12,7 @@ class ChannelVC: UIViewController {
 
     // Outlets
     @IBOutlet weak var loginButton: UIButton! // Need to change the title of the login button, we will display the user's name instead.
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){} //Not connect IBAction: This allows the segue unwind from Create Account VC back to ChannelVC (here);
     
     
     override func viewDidLoad() {

@@ -21,4 +21,8 @@ class LoginVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func createAccntBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: TO_CREATE_ACCOUNT, sender: nil) //This connects "Don't have an account here?" into the Create Account VC //
+        
+    }
 }
