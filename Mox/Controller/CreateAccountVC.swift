@@ -9,15 +9,46 @@
 import UIKit
 
 class CreateAccountVC: UIViewController {
-
+    
+    // Outlets
+    
+    @IBOutlet weak var usernameTxt: UITextField!
+    @IBOutlet weak var emailTxt: UITextField!
+    @IBOutlet weak var passTxt: UITextField!
+    @IBOutlet weak var userImg: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func pickAvatarPressed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func createAccntPressed(_ sender: Any) {
+        guard let email = emailTxt.text , emailTxt.text != "" else { return // guard statements : unwrapping optional values, the values of the uI text field (optional string) therefore we need to unwrap them.
+        }
+        guard let pass = passTxt.text , passTxt.text != "" else { return //code read: pass text  where the passTxt.text does not equal an empty string, else we will return.
+        }
+        
+        AuthService.instance.registerUser(email: email, password: pass) { (success) in
+            if success {
+                print("registered user!")
+            } //Once we have have our email/pass we will call our register function inside the auth service. Server can sleep, so check out Hobby if you want a server that's always awake and responsive to any calls.
+            
+        }
+    }
+    
+    @IBAction func pickBGColorPressed(_ sender: Any) {
+    }
+    
     @IBAction func closePressed(_ sender: Any) {
         performSegue(withIdentifier: UNWIND, sender: nil) // This allows us to come back from Create Account VC to Channel VC via (X) Button Top Right.
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
