@@ -87,6 +87,7 @@ class CreateAccountVC: UIViewController {
         let b = CGFloat(arc4random_uniform(255)) / 255
         
         bgColor = UIColor(red: r, green: g, blue: b, alpha: 1) // alpha is 1 so it's NOT transparent at all
+        avatarColor = "[\(r), \(g), \(b), 1]" // This will display the background color of chosen avatar icon in channelVC (bottom left)
         UIView.animate(withDuration: 0.2) { // sets the animation of background color appearance. (Fade animation)
             self.userImg.backgroundColor = self.bgColor
 
