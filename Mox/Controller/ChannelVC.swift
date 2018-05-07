@@ -8,16 +8,19 @@
 
 import UIKit
 
-class ChannelVC: UIViewController {
+class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // Outlets
     @IBOutlet weak var userImg: CircleImage!
     @IBOutlet weak var loginButton: UIButton! // Need to change the title of the login button, we will display the user's name instead.
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){} //Not connect IBAction: This allows the segue unwind from Create Account VC back to ChannelVC (here);
     
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
 
         self.revealViewController().rearViewRevealWidth = self.view.frame.size.width - 60
         
@@ -63,6 +66,26 @@ class ChannelVC: UIViewController {
             userImg.image = UIImage(named: "menuProfileIcon")
             userImg.backgroundColor = UIColor.clear
         }
+    }
+    
+    //WE need to conform otherwise delegate wont work from import
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "channelCell", for: indexPath) as? ChannelCell {
+            let channel = MessageService.instance.channels[indexPath.row]
+            cell.configureCell(channel: channel)
+            return cell
+        } else {
+            return UITableViewCell()
+//            return ChannelCell()
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+        
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MessageService.instance.channels.count
     }
     
 }
