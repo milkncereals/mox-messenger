@@ -23,6 +23,13 @@ let TO_CREATE_ACCOUNT = "toCreateAccount"
 let UNWIND = "unwindToChannel"
 let TO_AVATAR_PICKER = "toAvatarPicker"
 
+//Colors
+let moxPurplePlaceHolder = #colorLiteral(red: 0.423529923, green: 0.6870478392, blue: 0.8348321319, alpha: 0.5)
+
+//Notification Constants
+let NOTIF_USER_DATA_DID_CHANGE = Notification.Name("notifUserDataChanged")
+
+
 // User Defaults
 let TOKEN_KEY = "token"
 let LOGGED_IN_KEY = "loggedIn"
