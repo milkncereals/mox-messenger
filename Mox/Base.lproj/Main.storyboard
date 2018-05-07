@@ -171,6 +171,9 @@
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="loginPressed:" destination="yfq-5p-E1G" eventType="touchUpInside" id="EgC-7p-hvc"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="Xys-Jk-Ndr">
                                 <rect key="frame" x="62.5" y="160" width="250" height="86"/>
@@ -225,15 +228,21 @@
                                     <action selector="createAccntBtnPressed:" destination="yfq-5p-E1G" eventType="touchUpInside" id="C4d-56-3f8"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BMF-bw-Jyq">
+                                <rect key="frame" x="169" y="215" width="37" height="37"/>
+                                <color key="color" red="0.60862165180000005" green="0.3294117647" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Jya-NZ-PiG" firstAttribute="trailing" secondItem="bNu-HL-cyp" secondAttribute="trailing" id="CNO-5s-Ejl"/>
                             <constraint firstItem="Phz-xT-Kkn" firstAttribute="top" secondItem="AIg-cZ-t55" secondAttribute="bottom" id="HdY-Aj-5gI"/>
+                            <constraint firstItem="BMF-bw-Jyq" firstAttribute="centerX" secondItem="Zl4-B3-Lz4" secondAttribute="centerX" id="Jz3-vn-tYK"/>
                             <constraint firstItem="Phz-xT-Kkn" firstAttribute="centerX" secondItem="Zl4-B3-Lz4" secondAttribute="centerX" id="KF8-ZS-ALe"/>
                             <constraint firstItem="AIg-cZ-t55" firstAttribute="top" secondItem="Xys-Jk-Ndr" secondAttribute="bottom" constant="40" id="VmP-Qs-nMH"/>
                             <constraint firstItem="Xys-Jk-Ndr" firstAttribute="top" secondItem="nSZ-GS-zGK" secondAttribute="bottom" constant="40" id="WFo-5U-mmG"/>
                             <constraint firstItem="nSZ-GS-zGK" firstAttribute="centerX" secondItem="Zl4-B3-Lz4" secondAttribute="centerX" id="d2V-yq-QDE"/>
+                            <constraint firstItem="BMF-bw-Jyq" firstAttribute="centerY" secondItem="Zl4-B3-Lz4" secondAttribute="centerY" constant="-100" id="lBW-y0-Qjh"/>
                             <constraint firstItem="nSZ-GS-zGK" firstAttribute="top" secondItem="Jya-NZ-PiG" secondAttribute="top" constant="60" id="n7E-7K-otV"/>
                             <constraint firstItem="AIg-cZ-t55" firstAttribute="centerX" secondItem="Zl4-B3-Lz4" secondAttribute="centerX" id="pq3-0l-xh0"/>
                             <constraint firstItem="bNu-HL-cyp" firstAttribute="top" secondItem="Jya-NZ-PiG" secondAttribute="top" constant="8" id="vVF-IL-EEV"/>
@@ -242,6 +251,9 @@
                         <viewLayoutGuide key="safeArea" id="Jya-NZ-PiG"/>
                     </view>
                     <connections>
+                        <outlet property="passwordTxt" destination="t0Z-H4-r4k" id="MZO-eZ-C2W"/>
+                        <outlet property="spinner" destination="BMF-bw-Jyq" id="D9x-2c-G9n"/>
+                        <outlet property="usertextName" destination="aZl-rf-d74" id="YPb-Bw-djT"/>
                         <segue destination="ZdB-rw-0Mj" kind="show" identifier="toCreateAccount" id="koY-6O-aph"/>
                     </connections>
                 </viewController>
