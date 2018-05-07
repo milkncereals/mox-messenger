@@ -447,7 +447,7 @@
                                 </segments>
                                 <color key="tintColor" red="0.35686274509999999" green="0.62352941179999999" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="segmentControlCHanged:" destination="ch7-rF-ISu" eventType="valueChanged" id="28z-I6-Ofh"/>
+                                    <action selector="segmentControlChanged:" destination="ch7-rF-ISu" eventType="valueChanged" id="5Rl-Rb-WYv"/>
                                 </connections>
                             </segmentedControl>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EFt-T5-bOp">

@@ -28,6 +28,14 @@ class CreateAccountVC: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) { // This allows the change of Profile Default image to the one chosen from our avatarPicker.
+        if UserDataService.instance.avatarName != "" { //is not still equal to that empty screen, then we have selected one from the picker.
+            userImg.image = UIImage(named: UserDataService.instance.avatarName)
+            avatarName = UserDataService.instance.avatarName
+        }
+        
+    }
 
     @IBAction func pickAvatarPressed(_ sender: Any) {
         performSegue(withIdentifier: TO_AVATAR_PICKER, sender: nil)
