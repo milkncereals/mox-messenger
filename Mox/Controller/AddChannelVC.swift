@@ -24,6 +24,13 @@ class AddChannelVC: UIViewController {
     }
     
     @IBAction func createChannelPressed(_ sender: Any) {
+        guard let channelName = nameTxt.text , nameTxt.text != "" else { return } // See SocketService.swift // unwrapping variables.
+        guard let channelDesc = chanDesc.text else { return } // unwrapping variables..
+        SocketService.instance.addChannel(channelName: channelName, channelDescription: channelDesc) { (success) in
+            if success {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func closeModalPressed(_ sender: Any) { //Touch Background to close popups
@@ -43,3 +50,6 @@ class AddChannelVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
+
+// Channel Pop Up Method: Life Cycle: send emit to the API (name/desc info) will create a new channel object save that to the database and then emit of it's own to all apps that's connected

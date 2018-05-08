@@ -28,6 +28,12 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // The rearview should take up this much space <view,frame,size,width> except 60 points. */
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChannelVC.userDataDidChange(_:)), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+        
+        SocketService.instance.getChannel { (success) in
+            if success {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) { //This is so we can keep the login information of a person when they log out of the app.
