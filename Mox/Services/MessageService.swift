@@ -15,6 +15,7 @@ class MessageService {
     static let instance = MessageService()
     
     var channels = [Channel]() // This is where we store our channels from Model Channel.swift
+    var selectedChannel : Channel? //Optional channels
     
     //Now we are ready to create our function (have our web request and hit our API, then bring back all of our channel)
     func findAllChannel(completion: @escaping CompletionHandler) {
@@ -32,9 +33,10 @@ class MessageService {
                             let channel = Channel(channelTitle: name, channelDescription: channelDescription, id: id)
                             self.channels.append(channel) // This is how to look through JSON objects and add it to our JSON array.
                         }
+                        
 //                        print(self.channels[0].channelTitle)
                         NotificationCenter.default.post(name: NOTIF_CHANNELS_LOADED, object: nil)
-                        completion(true)
+                        completion(true) // after the channels are retrieved, we shoot this notification. Then we go to ChannelVC and observes that via NotificationCenter.default...
                     }
                 } catch let error {
                     debugPrint(error as Any)
@@ -48,7 +50,9 @@ class MessageService {
         }
     }
     
-    
+    func clearChannels() {
+        channels.removeAll()
+    }
     
     
     

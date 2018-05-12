@@ -40,8 +40,8 @@ let moxPurplePlaceHolder = #colorLiteral(red: 0.423529923, green: 0.6870478392, 
 
 //Notification Constants
 let NOTIF_USER_DATA_DID_CHANGE = Notification.Name("notifUserDataChanged")
-let NOTIF_CHANNELS_LOADED = Notification.Name("notifChannelsLoaded")
-let NOTIF_CHANNEL_SELECTED = Notification.Name("notifChannelSelected")
+let NOTIF_CHANNELS_LOADED = Notification.Name("notifChannelsLoaded") // This is to reload channels when logged in.
+let NOTIF_CHANNEL_SELECTED = Notification.Name("notifChannelSelected") // This shows diff channel in ChatVC
 
 // User Defaults
 let TOKEN_KEY = "token"

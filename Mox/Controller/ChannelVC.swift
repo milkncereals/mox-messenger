@@ -28,6 +28,7 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // The rearview should take up this much space <view,frame,size,width> except 60 points. */
         
         NotificationCenter.default.addObserver(self, selector: #selector(ChannelVC.userDataDidChange(_:)), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChannelVC.channelsLoaded(_:)), name: NOTIF_CHANNELS_LOADED, object: nil) // This is observed after messageService notification is prompted, and channels are reloaded. Without this the channel will not populate after logging in.
         
         SocketService.instance.getChannel { (success) in
             if success {
@@ -42,9 +43,11 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBAction func addChannelPressed(_ sender: Any) {
-        let addChannel = AddChannelVC()
-        addChannel.modalPresentationStyle = .custom
-        present(addChannel, animated: true, completion: nil)
+        if AuthService.instance.isLoggedIn {
+            let addChannel = AddChannelVC()
+            addChannel.modalPresentationStyle = .custom
+            present(addChannel, animated: true, completion: nil)
+        }
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -60,9 +63,13 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    @objc func userDataDidChange(_ notif: Notification) {
+    @objc func userDataDidChange(_ notif: Notification) { // When we press log out, this will trigger userDataDidChange, it follows the else fun from setupUserInfo, this empties the array then reloads the chanel list.
         setupUserInfo()
         
+    }
+    
+    @objc func channelsLoaded(_ notif:Notification) {
+        tableView.reloadData() // just reloads data.
     }
 
     func setupUserInfo() {
@@ -76,6 +83,7 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             loginButton.setTitle("Login", for: .normal)
             userImg.image = UIImage(named: "menuProfileIcon")
             userImg.backgroundColor = UIColor.clear
+            tableView.reloadData()
         }
     }
     
@@ -97,6 +105,14 @@ class ChannelVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MessageService.instance.channels.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let channel = MessageService.instance.channels[indexPath.row] // We create the channel based on what we selected
+        MessageService.instance.selectedChannel = channel // set that into our selected channel ^^
+        NotificationCenter.default.post(name: NOTIF_CHANNEL_SELECTED, object: nil) // Shoot notification that we have selected a channel
+        
+        self.revealViewController().revealToggle(animated: true) // we are access the VC and we call the toggle function to slide MENU back and forth. (e.g. everytime we click a channel, it toggles and moves to the chatVC, changes for every channel.)
     }
     
 }

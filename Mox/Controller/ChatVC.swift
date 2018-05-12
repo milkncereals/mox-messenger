@@ -13,6 +13,8 @@ class ChatVC: UIViewController {
     // Outletz (not an action)
     @IBOutlet weak var menuButton: UIButton!
     
+    @IBOutlet weak var channelNameLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
@@ -28,14 +30,38 @@ class ChatVC: UIViewController {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer()) // This is the slide-feature to close
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer()) // This is the tap-gesture to close
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.userDataDidChange(_:)), name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.channelSelected(_:)), name: NOTIF_CHANNEL_SELECTED, object: nil)
+        
         if AuthService.instance.isLoggedIn {
-            AuthService.instance.findUserByEmail { (success) in
+            AuthService.instance.findUserByEmail(completion: { (success) in
                 NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
-            }
-        }
-        MessageService.instance.findAllChannel { (success) in
-            
+            })
         }
     }
+    
+    @objc func userDataDidChange(_ notif: Notification) { // When we press log out, this will trigger userDataDidChange, it follows the else fun from setupUserInfo, this empties the array then reloads the chanel list.
+        if AuthService.instance.isLoggedIn {
+            onLoginGetMessages() // getting channels
+        } else {
+            channelNameLbl.text = "Please Log In first"
+        }
+    }
+    @objc func channelSelected(_ notif: Notification) {
+        updateWithChannel()
+    }
+    
+    func updateWithChannel() { // This updates the name of the channel via ChatVC (middle top). This is also not included above because we will be calling this function in other places.
+        let channelName = MessageService.instance.selectedChannel?.channelTitle ?? ""; channelNameLbl.text = "#\(channelName)"  // ?? "" is essentially... coalesing nil, if it can't find a non-optional string, then set as an empty string
+    }
 
+    func onLoginGetMessages() {
+        MessageService.instance.findAllChannel { (success) in
+            // Do stuff with channels
+        }
+    }
 }
+
+//MessageService.instance.findAllChannel { (success) in
+//
+//}
