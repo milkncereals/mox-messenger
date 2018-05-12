@@ -11,6 +11,7 @@
 		91098A092088B17400B61811 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91098A082088B17400B61811 /* LoginVC.swift */; };
 		9141E6AC20A7048B00B9C6DD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9141E6AB20A7048B00B9C6DD /* Message.swift */; };
 		9141E6AE20A7118000B9C6DD /* KeyboardBoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9141E6AD20A7118000B9C6DD /* KeyboardBoundView.swift */; };
+		9141E6B020A7173F00B9C6DD /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9141E6AF20A7173F00B9C6DD /* MessageCell.swift */; };
 		91574B3920A089040016DB43 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91574B3820A089040016DB43 /* CircleImage.swift */; };
 		91574B3C20A0A04D0016DB43 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91574B3A20A0A04D0016DB43 /* ProfileVC.swift */; };
 		91574B3D20A0A04D0016DB43 /* ProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91574B3B20A0A04D0016DB43 /* ProfileVC.xib */; };
@@ -44,6 +45,7 @@
 		91098A082088B17400B61811 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		9141E6AB20A7048B00B9C6DD /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		9141E6AD20A7118000B9C6DD /* KeyboardBoundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardBoundView.swift; sourceTree = "<group>"; };
+		9141E6AF20A7173F00B9C6DD /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		91574B3820A089040016DB43 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		91574B3A20A0A04D0016DB43 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		91574B3B20A0A04D0016DB43 /* ProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileVC.xib; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				91574B3820A089040016DB43 /* CircleImage.swift */,
 				9198359C20A0CC1A00A4DF93 /* ChannelCell.swift */,
 				9141E6AD20A7118000B9C6DD /* KeyboardBoundView.swift */,
+				9141E6AF20A7173F00B9C6DD /* MessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				9198359D20A0CC1A00A4DF93 /* ChannelCell.swift in Sources */,
 				91ECE61A20471B5A00158A27 /* ChannelVC.swift in Sources */,
 				91C72005209F7B5900988D6C /* AvatarPickerVC.swift in Sources */,
+				9141E6B020A7173F00B9C6DD /* MessageCell.swift in Sources */,
 				91C72001209F570D00988D6C /* RoundedButton.swift in Sources */,
 				9141E6AC20A7048B00B9C6DD /* Message.swift in Sources */,
 				9198359B20A0C4C300A4DF93 /* Channel.swift in Sources */,

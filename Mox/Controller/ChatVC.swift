@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatVC: UIViewController {
+class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Outletz (not an action)
     @IBOutlet weak var menuButton: UIButton!
@@ -17,13 +17,22 @@ class ChatVC: UIViewController {
     
     @IBOutlet weak var messageTxtBox: UITextField!
     
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.bindToKeyboard()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.estimatedRowHeight = 80 
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(ChatVC.handleTap))
         view.addGestureRecognizer(tap)
         menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
+        revealViewController()
         
         /* Target is going to be the revealViewController
         Selection is the method that's inside the SWReveal files
@@ -100,14 +109,31 @@ class ChatVC: UIViewController {
     func getMessages() {
         guard let channelId = MessageService.instance.selectedChannel?.id else { return }
         MessageService.instance.findAllMessages(forChannelId: channelId) { (success) in
-            
+            if success {
+                self.tableView.reloadData()
+            }
         }
 
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as? MessageCell {
+            let message = MessageService.instance.messages[indexPath.row]
+            cell.configureCell(message: message)
+            return cell
+            
+        } else {
+            return UITableViewCell()
+        }
+    }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
-    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MessageService.instance.messages.count
+    }
     
     
 }
