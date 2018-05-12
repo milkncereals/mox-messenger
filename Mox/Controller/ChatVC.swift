@@ -15,8 +15,14 @@ class ChatVC: UIViewController {
     
     @IBOutlet weak var channelNameLbl: UILabel!
     
+    @IBOutlet weak var messageTxtBox: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.bindToKeyboard()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ChatVC.handleTap))
+        view.addGestureRecognizer(tap)
         menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
         
         /* Target is going to be the revealViewController
@@ -50,12 +56,33 @@ class ChatVC: UIViewController {
     @objc func channelSelected(_ notif: Notification) {
         updateWithChannel()
     }
+    @objc func handleTap() {
+        view.endEditing(true)
+    }
     
     func updateWithChannel() { // This updates the name of the channel via ChatVC (middle top). This is also not included above because we will be calling this function in other places.
         let channelName = MessageService.instance.selectedChannel?.channelTitle ?? ""; channelNameLbl.text = "#\(channelName)"  // ?? "" is essentially... coalesing nil, if it can't find a non-optional string, then set as an empty string
         getMessages()
     }
 
+    @IBAction func sendMsgPressed(_ sender: Any) {
+        if AuthService.instance.isLoggedIn {
+            guard let channelId = MessageService.instance.selectedChannel?.id else { return }
+            guard let message = messageTxtBox.text else { return }
+            
+            SocketService.instance.addMessage(messageBody: message, userId: UserDataService.instance.id, channelId: channelId, completion:  { (success) in
+                if success {
+                    self.messageTxtBox.text = ""
+                    self.messageTxtBox.resignFirstResponder()
+                    SocketService.instance.socket.emit("stopType", UserDataService.instance.name, channelId)
+                } else {
+                    debugPrint("Error sending messsage")
+                }
+            })
+        }
+        
+    }
+    
     func onLoginGetMessages() {
         MessageService.instance.findAllChannel { (success) in // returns an array of function...
             if success {
@@ -75,8 +102,7 @@ class ChatVC: UIViewController {
         MessageService.instance.findAllMessages(forChannelId: channelId) { (success) in
             
         }
-        
-        
+
     }
     
     
