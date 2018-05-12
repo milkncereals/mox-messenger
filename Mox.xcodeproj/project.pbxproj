@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		91098A072088A22700B61811 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91098A062088A22700B61811 /* Constants.swift */; };
 		91098A092088B17400B61811 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91098A082088B17400B61811 /* LoginVC.swift */; };
+		9141E6AC20A7048B00B9C6DD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9141E6AB20A7048B00B9C6DD /* Message.swift */; };
 		91574B3920A089040016DB43 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91574B3820A089040016DB43 /* CircleImage.swift */; };
 		91574B3C20A0A04D0016DB43 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91574B3A20A0A04D0016DB43 /* ProfileVC.swift */; };
 		91574B3D20A0A04D0016DB43 /* ProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91574B3B20A0A04D0016DB43 /* ProfileVC.xib */; };
@@ -40,6 +41,7 @@
 		7F4837691F3257DF9CA9CA81 /* Pods-Mox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mox.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mox/Pods-Mox.release.xcconfig"; sourceTree = "<group>"; };
 		91098A062088A22700B61811 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		91098A082088B17400B61811 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		9141E6AB20A7048B00B9C6DD /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		91574B3820A089040016DB43 /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		91574B3A20A0A04D0016DB43 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		91574B3B20A0A04D0016DB43 /* ProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileVC.xib; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				9198359A20A0C4C300A4DF93 /* Channel.swift */,
+				9141E6AB20A7048B00B9C6DD /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				91ECE61A20471B5A00158A27 /* ChannelVC.swift in Sources */,
 				91C72005209F7B5900988D6C /* AvatarPickerVC.swift in Sources */,
 				91C72001209F570D00988D6C /* RoundedButton.swift in Sources */,
+				9141E6AC20A7048B00B9C6DD /* Message.swift in Sources */,
 				9198359B20A0C4C300A4DF93 /* Channel.swift in Sources */,
 				91574B3920A089040016DB43 /* CircleImage.swift in Sources */,
 				9198359920A0C49300A4DF93 /* MessageService.swift in Sources */,

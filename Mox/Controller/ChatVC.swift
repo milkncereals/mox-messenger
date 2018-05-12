@@ -53,13 +53,37 @@ class ChatVC: UIViewController {
     
     func updateWithChannel() { // This updates the name of the channel via ChatVC (middle top). This is also not included above because we will be calling this function in other places.
         let channelName = MessageService.instance.selectedChannel?.channelTitle ?? ""; channelNameLbl.text = "#\(channelName)"  // ?? "" is essentially... coalesing nil, if it can't find a non-optional string, then set as an empty string
+        getMessages()
     }
 
     func onLoginGetMessages() {
-        MessageService.instance.findAllChannel { (success) in
+        MessageService.instance.findAllChannel { (success) in // returns an array of function...
+            if success {
+                if MessageService.instance.channels.count > 0 {
+                    MessageService.instance.selectedChannel = MessageService.instance.channels[0] // This will set 1st
+                    self.updateWithChannel()
+                } else {
+                    self.channelNameLbl.text = "No channels yet..."
+                }
+            }
             // Do stuff with channels
         }
     }
+    
+    func getMessages() {
+        guard let channelId = MessageService.instance.selectedChannel?.id else { return }
+        MessageService.instance.findAllMessages(forChannelId: channelId) { (success) in
+            
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
 }
 
 //MessageService.instance.findAllChannel { (success) in
