@@ -65,6 +65,8 @@ class SocketService: NSObject {
                 guard let id = dataArray[6] as? String else { return }
                 guard let timeStamp = dataArray[7] as? String else { return }
                 
+//                if channelId == MessageService.instance.selectedChannel?.id && AuthService.instance.isLoggedIn {
+                
                 let message = Message(message: msgBody, userName: userName, channelId: channelId, userAvatar: userAvatar, userAvatarColor: userAvatarColor, id: id, timeStamp: timeStamp)
                 MessageService.instance.messages.append(message)
                 
