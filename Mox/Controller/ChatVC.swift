@@ -12,14 +12,11 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // Outletz (not an action)
     @IBOutlet weak var menuButton: UIButton!
-    
     @IBOutlet weak var channelNameLbl: UILabel!
-    
     @IBOutlet weak var messageTxtBox: UITextField!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var sendBtn: UIButton!
+    @IBOutlet weak var typingUsersLbl: UILabel!
     
     // Variables
     
@@ -65,6 +62,30 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
         
+        SocketService.instance.getTypingUsers { (typingUsers) in // This is to show the loading icon whenever someone is typing inside the channel. "Earl is typing..."
+            guard let channelId = MessageService.instance.selectedChannel?.id else { return }
+            var names = ""
+            var numberOfTypers = 0
+            self.typingUsersLbl.text = ""
+            
+            for(typingUser, channel) in typingUsers {
+                // verify that the person typing is not us and that they're in the same channel
+                if typingUser != UserDataService.instance.name && channel == channelId {
+                    if names == "" {
+                        names = typingUser
+                    } else {
+                        names = "\(names), \(typingUser)"
+                    }
+                    numberOfTypers += 1
+                }
+            }
+            
+            if numberOfTypers > 0 && AuthService.instance.isLoggedIn {
+                let verb = numberOfTypers > 1 ? "are" : "is"
+                self.typingUsersLbl.text = "\(names) \(verb) typing a message" // Is typing... Are typing...
+            }
+        }
+        
         if AuthService.instance.isLoggedIn {
             AuthService.instance.findUserByEmail(completion: { (success) in
                 NotificationCenter.default.post(name: NOTIF_USER_DATA_DID_CHANGE, object: nil)
@@ -101,15 +122,28 @@ class ChatVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBAction func messageBoxEditing(_ sender: Any) { // This shows/hides the flying paper icon *send* button when there's nothing typed.
         
-        if messageTxtBox.text == "" {
-            isTyping = false
-            sendBtn.isHidden = true
+        guard let channelId = MessageService.instance.selectedChannel?.id else { return } // X name is typing...
+        if let txt = messageTxtBox.text {
+            sendBtn.isHidden = txt.count == 0
+            
+            let socketEvent = txt.count == 0 ? "stopType" : "startType"
+            debugPrint("Emitting \(socketEvent)")
+            SocketService.instance.socket.emit(socketEvent, UserDataService.instance.name, channelId)
         } else {
-            if isTyping == false {
-                sendBtn.isHidden = false
-            }
-            isTyping = true
+            sendBtn.isHidden = true
         }
+        
+        
+//        if messageTxtBox.text == "" {
+//            isTyping = false
+//            sendBtn.isHidden = true
+//
+//        } else {
+//            if isTyping == false {
+//                sendBtn.isHidden = false
+//            }
+//            isTyping = true
+//        }
         
     }
     
